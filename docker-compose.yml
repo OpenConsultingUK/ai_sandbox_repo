@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  triage-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: triage-agent-dev
+    ports:
+      - "8000:8000" # Good for local testing, though Nginx is the main entry
+    env_file:
+      - .env
+    environment:
+      - ENV=development
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+    working_dir: /home/user/app/src
+    volumes:
+      # Mounts your code into the working directory
+      #- ./src:/home/user/app/src
+      - .:/home/user/app
+      - ./README.md:/home/user/app/README.md
+      - ./.env:/home/user/app/.env:ro
+    # This command worked for you before to find the 'fact' agent
+    command: ["/opt/venv/bin/adk", "web", "--port", "8000"]
+
+
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx-agent
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      # 
+      # --- THIS IS THE FIX ---
+      # Mount your *actual* config file from the *actual* path
+      - ./nginx/web.conf:/etc/nginx/conf.d/default.conf:ro
+      #
+      # Mount the SSL certs from the path your script created
+      - ./ssl/uss016.dev.openconsultinguk.com:/etc/letsencrypt:ro
+    depends_on:
+      - triage-agent
+    #restart: unless-stopped

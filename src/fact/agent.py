@@ -2,16 +2,17 @@ import os
 from google.adk.agents import Agent
 # --- IMPORT THE ONLY TOOL WE NEED ---
 from google.adk.tools import google_search
+# --- IMPORT THE RUNTIME TO START THE AGENT ---
+#from google.adk.runtime import run_agent
 
-# --- Agent Definition ---
-# All the old functions (get_weather, get_current_time) are GONE.
+
 #
 # The google_search tool will automatically load its keys (GOOGLE_CSE_ID
 # and GOOGLE_SEARCH_API_KEY) from the .env file.
 
 root_agent = Agent(
-    name="fact_agent", # The name of your agent package
-    model="gemini-2.0-flash", # The "brain"
+    name="fact_agent", 
+    model="gemini-2.0-flash", 
     description=(
         "A general-purpose agent that can answer any question."
     ),
@@ -23,3 +24,9 @@ root_agent = Agent(
     # --- THIS IS THE ONLY TOOL IT HAS ---
     tools=[google_search],
 )
+
+# --- THIS BLOCK STARTS THE AGENT'S MAIN LOOP ---
+# This is a "blocking" call that will run forever
+# and keep your container alive.
+# if __name__ == "__main__":
+#     run_agent(root_agent)
