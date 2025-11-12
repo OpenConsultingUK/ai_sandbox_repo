@@ -65,4 +65,5 @@ RUN chown -R user:user ${HOME}
 
 USER user
 
-CMD ["adk", "web", "--port", "8000"]
+#CMD ["adk", "web", "--port", "8000"]
+CMD ["/opt/venv/bin/python", "-m", "adk", "api_server", "--module", "fact.agent", "--host", "0.0.0.0", "--port", "8000"]

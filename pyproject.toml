@@ -27,11 +27,22 @@ classifiers = [
 requires-python = "==3.12.*"
 
 dependencies = [
-    "google-adk[tools-google-search]==0.1.0",
+    "google-adk==0.1.0",
+    "mcp-server",
     "deprecated",
     "python-dotenv>=1.0.1",
     "rich", 
     "typer-slim[standard]",
+    "fastapi>=0.115.0",
+    "uvicorn>=0.30.1",
+]
+
+# --- REQUIRED OPTIONAL DEPENDENCIES FOR DEPLOYMENT ---
+[project.optional-dependencies]
+runtime = [
+    # All ADK runtime components, tools, and the CLI/Web server packages:
+    "google-adk[runtime,tools-google-search,cli]",
+    "mcp-server",
     "fastapi>=0.115.0",
     "uvicorn>=0.30.1",
 ]

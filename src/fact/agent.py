@@ -5,11 +5,9 @@ from google.adk.tools import google_search
 # --- IMPORT THE RUNTIME TO START THE AGENT ---
 #from google.adk.runtime import run_agent
 
-
 #
 # The google_search tool will automatically load its keys (GOOGLE_CSE_ID
 # and GOOGLE_SEARCH_API_KEY) from the .env file.
-
 root_agent = Agent(
     name="fact_agent", 
     model="gemini-2.0-flash", 
@@ -24,7 +22,6 @@ root_agent = Agent(
     # --- THIS IS THE ONLY TOOL IT HAS ---
     tools=[google_search],
 )
-
 # --- THIS BLOCK STARTS THE AGENT'S MAIN LOOP ---
 # This is a "blocking" call that will run forever
 # and keep your container alive.
